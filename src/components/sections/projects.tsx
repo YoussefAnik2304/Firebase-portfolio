@@ -1,5 +1,7 @@
+"use client";
 import { RetroWindow } from '@/components/retro-window';
 import Image from 'next/image';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const projects = [
   { 
@@ -36,9 +38,9 @@ const projects = [
   },
 ];
 
-type Project = typeof projects[0] & { description?: string; stack?: string[] };
-
 export function ProjectsSection() {
+  const isMobile = useIsMobile();
+
   return (
     <RetroWindow title="C:\Projects">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -47,7 +49,7 @@ export function ProjectsSection() {
             <h3 className="font-headline text-xl mb-2">{project.name}</h3>
             <div className="relative group"> {/* Added group here */}
               {project.description && (
-                <div className="absolute inset-0 bg-background border-2 border-black p-2 flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div className={`absolute inset-0 border-2 border-black p-2 flex flex-col justify-center items-center ${isMobile ? 'bg-black/70' : 'bg-black/90'} md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300`}>
                   <p className="font-code text-sm mb-2 text-center">{project.description}</p>
                   {project.stack && (
                     <div className="flex flex-wrap justify-center gap-2 mt-2">
